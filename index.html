@@ -17,7 +17,7 @@ function sendImage() {
     let formData = new FormData();
     formData.append("file", file);
 
-    fetch('https://ВАШ-АДРЕС.ngrok-free.app/upload', {
+    fetch('https://04b18e9bba76.ngrok-free.app/send', {
         method: 'POST',
         body: formData
     }).then(res => {
