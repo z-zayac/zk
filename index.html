@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Отправка текста</title></head>
+<body>
+    <h1>Введите текст</h1>
+    <textarea id="input"></textarea><br>
+    <button onclick="send()">Готово</button>
+
+<script>
+function send() {
+    let text = document.getElementById('input').value;
+    fetch('http://IP_СЕРВЕРА:5000/send', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text: text})
+    });
+    alert("Отправлено!");
+}
+</script>
+</body>
+</html>
