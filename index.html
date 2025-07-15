@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head><title>Отправка текста</title></head>
+<head><title>Отправка изображения</title></head>
 <body>
-    <h1>Введите текст</h1>
-    <textarea id="input"></textarea><br>
-    <button onclick="send()">Готово</button>
+    <h1>Отправьте картинку на телевизор</h1>
+    <input type="file" id="fileInput"><br><br>
+    <button onclick="sendImage()">Отправить</button>
 
 <script>
-function send() {
-    let text = document.getElementById('input').value;
-    fetch('https://04b18e9bba76.ngrok-free.app/send', {
+function sendImage() {
+    let file = document.getElementById('fileInput').files[0];
+    if (!file) {
+        alert("Выберите файл!");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    fetch('https://ВАШ-АДРЕС.ngrok-free.app/upload', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({text: text})
-    }).then(() => alert("Отправлено!")).catch(err => alert("Ошибка: " + err));
+        body: formData
+    }).then(res => {
+        if (res.ok) alert("Отправлено!");
+        else alert("Ошибка загрузки");
+    }).catch(err => alert("Ошибка: " + err));
 }
 </script>
 </body>
