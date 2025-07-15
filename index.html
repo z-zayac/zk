@@ -9,12 +9,11 @@
 <script>
 function send() {
     let text = document.getElementById('input').value;
-    fetch('http://IP_СЕРВЕРА:5000/send', {
+    fetch('http://192.168.100.40:5000/send', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({text: text})
-    });
-    alert("Отправлено!");
+    }).then(() => alert("Отправлено!")).catch(err => alert("Ошибка: " + err));
 }
 </script>
 </body>
