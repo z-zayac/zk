@@ -18,7 +18,7 @@ function send() {
     let formData = new FormData();
     formData.append("image", file);
 
-    fetch("http://ТВОЙ_IP:5000/upload", {
+    fetch("https://04b18e9bba76.ngrok-free.app:5000/upload", {
         method: "POST",
         body: formData
     }).then(() => alert("Изображение отправлено!"))
