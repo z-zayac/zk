@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head><title>Отправка изображения</title></head>
+<head><title>Отправка картинки</title></head>
 <body>
-    <h1>Отправьте картинку на телевизор</h1>
+    <h1>Выберите изображение</h1>
     <input type="file" id="fileInput"><br><br>
-    <button onclick="sendImage()">Отправить</button>
+    <button onclick="send()">Готово</button>
 
 <script>
-function sendImage() {
-    let file = document.getElementById('fileInput').files[0];
+function send() {
+    let fileInput = document.getElementById('fileInput');
+    let file = fileInput.files[0];
     if (!file) {
         alert("Выберите файл!");
         return;
     }
 
     let formData = new FormData();
-    formData.append("file", file);
+    formData.append("image", file);
 
-    fetch('https://04b18e9bba76.ngrok-free.app/send', {
-        method: 'POST',
+    fetch("http://ТВОЙ_IP:5000/upload", {
+        method: "POST",
         body: formData
-    }).then(res => {
-        if (res.ok) alert("Отправлено!");
-        else alert("Ошибка загрузки");
-    }).catch(err => alert("Ошибка: " + err));
+    }).then(() => alert("Изображение отправлено!"))
+      .catch(err => alert("Ошибка отправки: " + err));
 }
 </script>
 </body>
