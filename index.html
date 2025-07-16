@@ -1,15 +1,20 @@
-<input type="file" id="fileInput">
+<input type="file" id="file">
 <button onclick="send()">Отправить</button>
 
 <script>
 function send() {
-    let file = document.getElementById('fileInput').files[0];
+    let file = document.getElementById('file').files[0];
     let formData = new FormData();
-    formData.append("file", file);
+    formData.append("image", file);
 
-    fetch("https://2a4a905e5e06.ngrok-free.app/send_image", {
-        method: "POST",
+    fetch('https://ВАШ_НГРОК/send_image', {
+        method: 'POST',
         body: formData
-    }).then(res => alert("Готово!"));
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Ошибка при отправке");
+        alert("Отправлено!");
+    })
+    .catch(err => alert("Ошибка: " + err.message));
 }
 </script>
