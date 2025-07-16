@@ -7,7 +7,7 @@ function send() {
     let formData = new FormData();
     formData.append("file", file);
 
-    fetch("https://ТВОЙ_NGROK_АДРЕС/send_image", {
+    fetch("https://2a4a905e5e06.ngrok-free.app/send_image", {
         method: "POST",
         body: formData
     }).then(res => alert("Готово!"));
