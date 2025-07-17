@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Загрузка картинки на телевизор</title>
-</head>
 <body>
-    <h1>Выбери картинку</h1>
-    <input type="file" id="fileInput"><br><br>
-    <button onclick="send()">Отправить</button>
+<h1>Отправить картинку</h1>
+<input type="file" id="fileInput">
+<button onclick="send()">Отправить</button>
 
-    <script>
-        async function send() {
-            const file = document.getElementById('fileInput').files[0];
-            if (!file) return alert("Выбери файл");
+<script>
+const server = 'https://pottery-simple-deeply-picnic.trycloudflare.com/send_image';
 
-            const formData = new FormData();
-            formData.append('file', file);
+function send() {
+    const file = document.getElementById('fileInput').files[0];
+    if (!file) return alert("Выберите файл!");
 
-            try {
-                const response = await fetch('https://wearing-collecting-bend-simple.trycloudflare.com/upload', {
-                    method: 'POST',
-                    body: formData
-                });
+    const formData = new FormData();
+    formData.append("file", file);
 
-                if (response.ok) alert('✅ Отправлено!');
-                else alert('Ошибка: ' + response.status);
-            } catch (error) {
-                alert('Ошибка соединения: ' + error);
-            }
-        }
-    </script>
+    fetch(server, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => alert("Картинка отправлена!"))
+    .catch(err => alert("Ошибка: " + err));
+}
+</script>
 </body>
 </html>
