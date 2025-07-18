@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Отправить картинку</h1>
-<input type="file" id="fileInput">
+<h1>Отправить картинку (PNG или JPG)</h1>
+<input type="file" id="fileInput" accept="image/png, image/jpeg">
 <button onclick="send()">Отправить</button>
 
 <script>
-const server = 'https://threats-identical-than-fix.trycloudflare.com/send_image';
+const server = 'https://results-manchester-introducing-massive.trycloudflare.com/send_image';
 
 function send() {
-    const file = document.getElementById('fileInput').files[0];
-    if (!file) return alert("Выберите файл!");
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    if (!file) return alert("Выберите файл!(0)");
+
+    const validTypes = ['image/png', 'image/jpeg'];
+    if (!validTypes.includes(file.type)) {
+        return alert("Можно отправлять только PNG или JPG файлы!");
+    }
 
     const formData = new FormData();
     formData.append("file", file);
