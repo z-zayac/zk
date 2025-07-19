@@ -39,13 +39,7 @@
             max-width: 500px;
         }
 
-        input[type="file"] {
-            margin-bottom: 20px;
-            width: 100%;
-            font-size: 1rem;
-        }
-
-        button {
+        .file-label, button {
             width: 100%;
             padding: 15px;
             background: #4CAF50;
@@ -54,11 +48,17 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            margin-bottom: 20px;
+            text-align: center;
             transition: background 0.3s;
         }
 
-        button:hover {
+        .file-label:hover, button:hover {
             background: #45a049;
+        }
+
+        input[type="file"] {
+            display: none;
         }
 
         #status {
@@ -68,7 +68,6 @@
             text-align: center;
         }
 
-        /* Анимационный загрузчик */
         #loader {
             border: 8px solid #f3f3f3;
             border-top: 8px solid #4CAF50;
@@ -91,6 +90,7 @@
 <h1>Отправить картинку</h1>
 
 <div class="container">
+    <label for="fileInput" class="file-label">Выбрать файл</label>
     <input type="file" id="fileInput" accept="image/png, image/jpeg">
     <button onclick="send()">Отправить</button>
     <div id="loader"></div>
