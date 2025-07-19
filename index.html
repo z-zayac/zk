@@ -1,17 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Отправить картинку</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f0f0f0, #c0c0ff);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 3vw;
+        margin-bottom: 2vh;
+    }
+
+    #fileInput {
+        width: 50vw;
+        max-width: 400px;
+        margin-bottom: 2vh;
+        font-size: 1.5vw;
+        padding: 1vh;
+    }
+
+    button {
+        padding: 1.5vh 3vw;
+        font-size: 2vw;
+        cursor: pointer;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 10px;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 6vw;
+        }
+
+        #fileInput {
+            width: 80vw;
+            font-size: 4vw;
+        }
+
+        button {
+            font-size: 5vw;
+            padding: 2vh 5vw;
+        }
+    }
+</style>
+</head>
 <body>
 <h1>Отправить картинку (PNG или JPG)</h1>
 <input type="file" id="fileInput" accept="image/png, image/jpeg">
 <button onclick="send()">Отправить</button>
 
 <script>
-const server = 'https://results-manchester-introducing-massive.trycloudflare.com/send_image';
+const server = 'https://toy-standards-variable-functionality.trycloudflare.com/send_image';
 
 function send() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-    if (!file) return alert("Выберите файл!(0)");
+    const file = document.getElementById('fileInput').files[0];
+    if (!file) return alert("Выберите файл!11");
 
     const validTypes = ['image/png', 'image/jpeg'];
     if (!validTypes.includes(file.type)) {
