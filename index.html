@@ -1,81 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Отправить картинку</title>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #f0f0f0, #c0c0ff);
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 3vw;
-        margin-bottom: 2vh;
-    }
-
-    #fileInput {
-        width: 50vw;
-        max-width: 400px;
-        margin-bottom: 2vh;
-        font-size: 1.5vw;
-        padding: 1vh;
-    }
-
-    button {
-        padding: 1.5vh 3vw;
-        font-size: 2vw;
-        cursor: pointer;
-        border: none;
-        background-color: #4CAF50;
-        color: white;
-        border-radius: 10px;
-        transition: background 0.3s;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 6vw;
+    <title>Отправка картинки</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
         }
-
-        #fileInput {
-            width: 80vw;
-            font-size: 4vw;
+        #status {
+            margin-top: 20px;
+            font-size: 24px;
+            color: green;
         }
-
-        button {
-            font-size: 5vw;
-            padding: 2vh 5vw;
-        }
-    }
-</style>
+    </style>
 </head>
 <body>
-<h1>Отправить картинку (PNG или JPG)</h1>
-<input type="file" id="fileInput" accept="image/png, image/jpeg">
+<h1>Отправить картинку</h1>
+<input type="file" id="fileInput" accept="image/png, image/jpeg"><br><br>
 <button onclick="send()">Отправить</button>
 
+<div id="status"></div>
+
 <script>
-const server = 'https://toy-standards-variable-functionality.trycloudflare.com/send_image';
+const server = 'https://your-cloudflare-tunnel-link/send_image';
 
 function send() {
     const file = document.getElementById('fileInput').files[0];
-    if (!file) return alert("Выберите файл!11");
+    const status = document.getElementById('status');
+    status.textContent = '';
 
-    const validTypes = ['image/png', 'image/jpeg'];
-    if (!validTypes.includes(file.type)) {
-        return alert("Можно отправлять только PNG или JPG файлы!");
+    if (!file) {
+        status.style.color = 'red';
+        status.textContent = "Выберите файл!";
+        return;
     }
 
     const formData = new FormData();
@@ -85,8 +45,19 @@ function send() {
         method: 'POST',
         body: formData
     })
-    .then(res => alert("Картинка отправлена!"))
-    .catch(err => alert("Ошибка: " + err));
+    .then(response => {
+        if (response.ok) {
+            status.style.color = 'green';
+            status.textContent = "ОК";
+        } else {
+            status.style.color = 'red';
+            status.textContent = "Ошибка загрузки!";
+        }
+    })
+    .catch(err => {
+        status.style.color = 'red';
+        status.textContent = "Ошибка: " + err;
+    });
 }
 </script>
 </body>
