@@ -1,28 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Отправка картинки</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: Arial, sans-serif;
-            margin-top: 50px;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #c2e9fb, #81a4fd);
         }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: clamp(24px, 5vw, 48px);
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
         #status {
             margin-top: 20px;
-            font-size: 24px;
-            color: green;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Анимационный загрузчик */
+        #loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #4CAF50;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
         }
     </style>
 </head>
 <body>
-<h1>Отправить картинку</h1>
-<input type="file" id="fileInput" accept="image/png, image/jpeg"><br><br>
-<button onclick="send()">Отправить</button>
 
-<div id="status"></div>
+<h1>Отправить картинку</h1>
+
+<div class="container">
+    <input type="file" id="fileInput" accept="image/png, image/jpeg">
+    <button onclick="send()">Отправить</button>
+    <div id="loader"></div>
+    <div id="status"></div>
+</div>
 
 <script>
 const server = 'https://toy-standards-variable-functionality.trycloudflare.com/send_image';
@@ -30,9 +103,14 @@ const server = 'https://toy-standards-variable-functionality.trycloudflare.com/s
 function send() {
     const file = document.getElementById('fileInput').files[0];
     const status = document.getElementById('status');
+    const loader = document.getElementById('loader');
+
     status.textContent = '';
+    status.style.color = '';
+    loader.style.display = 'block';
 
     if (!file) {
+        loader.style.display = 'none';
         status.style.color = 'red';
         status.textContent = "Выберите файл!";
         return;
@@ -46,6 +124,7 @@ function send() {
         body: formData
     })
     .then(response => {
+        loader.style.display = 'none';
         if (response.ok) {
             status.style.color = 'green';
             status.textContent = "ОК";
@@ -55,10 +134,12 @@ function send() {
         }
     })
     .catch(err => {
+        loader.style.display = 'none';
         status.style.color = 'red';
         status.textContent = "Ошибка: " + err;
     });
 }
 </script>
+
 </body>
 </html>
